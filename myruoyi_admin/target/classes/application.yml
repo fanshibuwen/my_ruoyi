@@ -1,0 +1,68 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /
+  tomcat:
+    uri-encoding: UTF-8
+    threads:
+      max: 200
+      min-spare: 30
+# 数据源的配置
+spring:
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/my_ruoyi?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
+    username: root
+    password: zhaolong
+    druid:
+      # 初始连接数量
+      initial-size: 5
+      # 最小连接池数量
+      min-idle: 10
+      # 最大连接池数量
+      max-active: 20
+      max-wait: 36000000
+  # 缓存配置
+  cache:
+    redis:
+      time-to-live: 6000
+    type: redis
+  #Redis相关配置
+  redis:
+    host: localhost
+    port: 6379
+    database: 0
+    password:
+    connect-timeout: 10s
+    lettuce:
+      pool:
+        # 最小空闲连接
+        min-idle: 0
+        # 最大空闲连接
+        max-idle: 8
+        # 最大数据库连接数
+        max-active: 8
+        #  连接池最大阻塞连接时间（使用复数值代表没有限制）
+        max-wait: -1ms
+# mybatis-plus的配置
+mybatis-plus:
+  # 搜索指定包别名
+  type-aliases-package: com.ruoyi.**.domain
+  # 配置mapper的扫描，找到所有的mapper的xml映射文件
+  mapper-locations: classpath*:mapper/**/*Mapper.xml
+  # 加载全局的配置文件
+  configuration:
+    log-impl: org.apache.ibatis.logging.slf4j.Slf4jImpl     #指定mybatis具体的日志实现
+    use-generated-keys: true    # 允许JDBC自动生成主键
+    map-underscore-to-camel-case: true    # 驼峰命名
+    default-executor-type: reuse    # 配置默认的执行器
+  #cache-enabled: true   # 全局映射启用缓存
+  global-config:
+    db-config:
+      logic-delete-value: 2    # 逻辑已删除值（默认为1）
+      logic-not-delete-value: 0   # 逻辑未删除值（默认为0）
+#日志相关配置
+logging:
+  level:
+    com.ruoyi.system.mapper: debug # 设置在控制台打印生成的SQL语句
